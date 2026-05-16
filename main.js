@@ -1,7 +1,8 @@
 /* ═══════════════════════════════════════════════
    VORNEX — main.js
-   All interactions, animations & audio
 ═══════════════════════════════════════════════ */
+
+document.addEventListener('DOMContentLoaded', () => {
 
 /* ─────────────────────────────────────────────
    SUPABASE CLIENT
@@ -461,3 +462,5 @@ document.getElementById('wlBtn').addEventListener('click', async () => {
     setTimeout(() => inp.style.borderColor = '', 1500);
   }
 });
+
+}); // end DOMContentLoaded
