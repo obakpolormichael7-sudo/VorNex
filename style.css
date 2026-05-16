@@ -384,6 +384,83 @@ footer{background:#070710;border-top:1px solid rgba(255,255,255,.04);padding:cla
 .soc:hover{background:rgba(157,78,221,.15);border-color:rgba(157,78,221,.35);color:var(--glow)}
 
 /* ═══════════════════════════════════════════════
+   AUTH MODAL
+═══════════════════════════════════════════════ */
+.auth-modal{
+  position:fixed;inset:0;z-index:8000;
+  background:rgba(5,5,13,.85);
+  backdrop-filter:blur(18px);
+  display:none;align-items:center;justify-content:center;
+  padding:1.5rem;
+}
+.auth-modal.open{display:flex}
+.auth-box{
+  background:#0f0f1a;
+  border:1px solid rgba(157,78,221,.2);
+  border-radius:24px;
+  padding:clamp(2rem,5vw,3rem);
+  width:100%;max-width:420px;
+  text-align:center;
+  position:relative;
+  box-shadow:0 40px 100px rgba(0,0,0,.6),0 0 60px rgba(157,78,221,.1);
+}
+.auth-close{
+  position:absolute;top:1.2rem;right:1.2rem;
+  background:rgba(255,255,255,.06);border:none;
+  color:rgba(240,237,248,.4);font-size:.9rem;
+  width:32px;height:32px;border-radius:50%;
+  cursor:none;transition:background .25s,color .25s;
+  display:flex;align-items:center;justify-content:center;
+}
+.auth-close:hover{background:rgba(255,255,255,.12);color:var(--white)}
+.auth-logo{
+  font-family:var(--FD);font-size:2rem;
+  letter-spacing:.12em;color:var(--white);
+  margin-bottom:1.5rem;
+}
+.auth-logo b{color:var(--glow)}
+.auth-title{
+  font-family:var(--FD);font-size:2.2rem;
+  color:var(--white);margin-bottom:.7rem;
+}
+.auth-sub{
+  font-size:.84rem;font-weight:300;line-height:1.65;
+  color:rgba(240,237,248,.4);margin-bottom:2rem;
+}
+.auth-google-btn{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:.9rem;
+  background:var(--white);color:var(--black);
+  border:none;border-radius:100px;
+  font-family:var(--FU);font-size:.82rem;font-weight:700;
+  letter-spacing:.08em;
+  padding:1rem 2rem;cursor:none;
+  transition:background .25s,transform .2s;
+}
+.auth-google-btn:hover{background:var(--glow);transform:scale(1.02)}
+.auth-note{
+  font-size:.68rem;font-weight:300;
+  color:rgba(240,237,248,.2);margin-top:1.2rem;
+  line-height:1.6;
+}
+
+/* Nav user state */
+.nav-user{display:flex;align-items:center;gap:.7rem}
+.nav-avatar{
+  width:34px;height:34px;border-radius:50%;
+  border:2px solid rgba(157,78,221,.5);
+  object-fit:cover;
+}
+.nav-signout{
+  font-family:var(--FU);font-size:.65rem;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(240,237,248,.4);background:none;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:100px;padding:.45rem 1rem;
+  cursor:none;transition:color .25s,border-color .25s;
+}
+.nav-signout:hover{color:var(--white);border-color:rgba(255,255,255,.3)}
+
+/* ═══════════════════════════════════════════════
    KEYFRAMES
 ═══════════════════════════════════════════════ */
 @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}

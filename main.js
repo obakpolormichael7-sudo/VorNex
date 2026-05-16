@@ -1,3 +1,91 @@
+/* ═══════════════════════════════════════════════
+   VORNEX — main.js
+   All interactions, animations & audio
+═══════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────
+   SUPABASE CLIENT
+───────────────────────────────────────────── */
+const SUPABASE_URL  = 'https://eeeypgxwnvcighbyeizo.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVlZXlwZ3h3bnZjaWdoYnllaXpvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5MzU5MTgsImV4cCI6MjA5NDUxMTkxOH0.LSxD4gTAjNoes-6dTGtNbncjQpVquG8VY-hx-zE9o5o';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+/* ─────────────────────────────────────────────
+   AUTH — GOOGLE SIGN IN / SIGN OUT
+───────────────────────────────────────────── */
+const authModal  = document.getElementById('authModal');
+const authBtn    = document.getElementById('authBtn');
+const authClose  = document.getElementById('authClose');
+const googleBtn  = document.getElementById('googleSignIn');
+const navUser    = document.getElementById('navUser');
+const navAvatar  = document.getElementById('navAvatar');
+const signOutBtn = document.getElementById('signOutBtn');
+
+// Open modal when Join Now clicked
+authBtn.addEventListener('click', () => {
+  authModal.classList.add('open');
+});
+
+// Close modal
+authClose.addEventListener('click', () => {
+  authModal.classList.remove('open');
+});
+
+// Close on outside click
+authModal.addEventListener('click', (e) => {
+  if (e.target === authModal) authModal.classList.remove('open');
+});
+
+// Google Sign In
+googleBtn.addEventListener('click', async () => {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: window.location.origin
+    }
+  });
+  if (error) console.error('Auth error:', error.message);
+});
+
+// Sign Out
+signOutBtn.addEventListener('click', async () => {
+  await supabase.auth.signOut();
+  navUser.style.display  = 'none';
+  authBtn.style.display  = 'flex';
+  authModal.classList.remove('open');
+});
+
+// Check session on page load & listen for changes
+supabase.auth.onAuthStateChange(async (event, session) => {
+  if (session?.user) {
+    // User is logged in
+    const user = session.user;
+
+    // Show avatar, hide Join Now
+    navAvatar.src        = user.user_metadata?.avatar_url || '';
+    navUser.style.display  = 'flex';
+    authBtn.style.display  = 'none';
+    authModal.classList.remove('open');
+
+    // Upsert user into our users table
+    await supabase.from('users').upsert({
+      id:        user.id,
+      email:     user.email,
+      username:  user.user_metadata?.full_name?.replace(/\s+/g, '_').toLowerCase()
+                 || user.email.split('@')[0],
+      avatar_url: user.user_metadata?.avatar_url || null,
+    }, { onConflict: 'id' });
+
+  } else {
+    // No session
+    navUser.style.display = 'none';
+    authBtn.style.display = 'flex';
+  }
+});
+
+/* ─────────────────────────────────────────────
+   WAITLIST — saves email to Supabase
+───────────────────────────────────────────── */
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -235,7 +323,10 @@ function initPage() {
   });
 }
 
-
+/* ─────────────────────────────────────────────
+   AMBIENT AUDIO (Web Audio API)
+   Click the ♪ button in the nav to toggle
+───────────────────────────────────────────── */
 let aCtx = null, mGain = null, audioMuted = true;
 const mbtn = document.getElementById('musicBtn');
 
@@ -328,18 +419,42 @@ document.getElementById('menuBtn').addEventListener('click', () => {
 /* ─────────────────────────────────────────────
    WAITLIST FORM
 ───────────────────────────────────────────── */
-document.getElementById('wlBtn').addEventListener('click', () => {
+document.getElementById('wlBtn').addEventListener('click', async () => {
   const inp = document.getElementById('wlIn');
   const btn = document.getElementById('wlBtn');
+  const email = inp.value.trim();
 
-  if (inp.value && inp.value.includes('@')) {
-    gsap.to(btn, { scale: 1.1, duration: 0.15, yoyo: true, repeat: 1, ease: 'power2.inOut' });
-    setTimeout(() => {
+  if (email && email.includes('@')) {
+    btn.textContent      = 'Saving...';
+    btn.style.opacity    = '.7';
+
+    const { error } = await supabase
+      .from('waitlist')
+      .insert({ email });
+
+    if (error && error.code === '23505') {
+      // Already on waitlist
       inp.value       = '';
-      inp.placeholder = "✦ You're on the list!";
-      btn.textContent = 'Joined ✓';
-      btn.style.background = 'var(--glow)';
-    }, 200);
+      inp.placeholder = "✦ You're already on the list!";
+      btn.textContent = 'Already In ✓';
+      btn.style.background = 'var(--accent)';
+      btn.style.opacity    = '1';
+    } else if (error) {
+      btn.textContent   = 'Try Again';
+      btn.style.opacity = '1';
+      inp.style.borderColor = 'var(--red)';
+      setTimeout(() => inp.style.borderColor = '', 1500);
+    } else {
+      // Success
+      gsap.to(btn, { scale: 1.1, duration: 0.15, yoyo: true, repeat: 1, ease: 'power2.inOut' });
+      setTimeout(() => {
+        inp.value            = '';
+        inp.placeholder      = "✦ You're on the list!";
+        btn.textContent      = 'Joined ✓';
+        btn.style.background = 'var(--glow)';
+        btn.style.opacity    = '1';
+      }, 200);
+    }
   } else {
     gsap.to(inp, { keyframes: { x: [-8, 8, -5, 5, -2, 2, 0] }, duration: 0.45, ease: 'power2.inOut' });
     inp.style.borderColor = 'var(--red)';
