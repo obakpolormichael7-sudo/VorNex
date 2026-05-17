@@ -85,6 +85,89 @@ supabase.auth.onAuthStateChange(async (event, session) => {
 });
 
 /* ─────────────────────────────────────────────
+   PAYSTACK PAYMENT
+───────────────────────────────────────────── */
+const PAYSTACK_KEY = 'pk_test_098898e0a8c22ef4cbb083f7e73acfd37fb44b48';
+
+document.querySelectorAll('.gamer-btn, .elite-btn').forEach(btn => {
+  btn.addEventListener('click', async () => {
+
+    // Check if user is logged in first
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      authModal.classList.add('open');
+      return;
+    }
+
+    const plan   = btn.dataset.plan;
+    const amount = parseInt(btn.dataset.amount);
+    const user   = session.user;
+
+    btn.disabled    = true;
+    btn.textContent = 'Loading...';
+
+    const handler = PaystackPop.setup({
+      key:       PAYSTACK_KEY,
+      email:     user.email,
+      amount:    amount,
+      currency:  'NGN',
+      ref:       'VORNEX_' + Date.now() + '_' + user.id.slice(0, 8),
+      metadata: {
+        user_id:  user.id,
+        plan:     plan,
+        username: user.user_metadata?.full_name || user.email
+      },
+      onClose: () => {
+        btn.disabled    = false;
+        btn.textContent = plan === 'gamer'
+          ? 'Subscribe — ₦1,500/mo'
+          : 'Subscribe — ₦2,999/mo';
+      },
+      callback: async (response) => {
+        // Payment successful — save to Supabase
+        const now     = new Date();
+        const expires = new Date(now.setMonth(now.getMonth() + 1));
+
+        // Save subscription
+        await supabase.from('subscriptions').insert({
+          user_id:              user.id,
+          tier:                 plan,
+          status:               'active',
+          paystack_customer_id: response.reference,
+          amount:               amount / 100,
+          expires_at:           expires.toISOString()
+        });
+
+        // Update user tier
+        await supabase.from('users').update({
+          subscription_tier:       plan,
+          subscription_status:     'active',
+          subscription_expires_at: expires.toISOString()
+        }).eq('id', user.id);
+
+        // Save transaction
+        await supabase.from('transactions').insert({
+          user_id:             user.id,
+          type:                'subscription',
+          amount:              amount / 100,
+          status:              'success',
+          paystack_reference:  response.reference,
+          description:         `VORNEX ${plan} subscription`
+        });
+
+        // Show success
+        btn.disabled         = false;
+        btn.textContent      = '✓ Subscribed!';
+        btn.style.background = 'var(--glow)';
+        btn.style.color      = 'var(--black)';
+      }
+    });
+
+    handler.openIframe();
+  });
+});
+
+/* ─────────────────────────────────────────────
    WAITLIST — saves email to Supabase
 ───────────────────────────────────────────── */
 

@@ -443,6 +443,30 @@ footer{background:#070710;border-top:1px solid rgba(255,255,255,.04);padding:cla
   line-height:1.6;
 }
 
+/* Subscribe buttons */
+.sub-btn{
+  width:100%;margin-top:1.2rem;
+  font-family:var(--FU);font-size:.72rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  border-radius:100px;padding:.75rem 1rem;
+  cursor:none;border:none;
+  transition:background .25s,transform .2s,opacity .25s;
+}
+.free-btn{
+  background:rgba(255,255,255,.06);
+  color:rgba(240,237,248,.5);
+  border:1px solid rgba(255,255,255,.1);
+}
+.free-btn:hover{background:rgba(255,255,255,.1);color:var(--white)}
+.gamer-btn{background:var(--white);color:var(--black)}
+.gamer-btn:hover{background:var(--glow);transform:scale(1.02)}
+.elite-btn{
+  background:linear-gradient(135deg,var(--accent),var(--glow));
+  color:var(--white);
+}
+.elite-btn:hover{opacity:.88;transform:scale(1.02)}
+.sub-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
 /* Nav user state */
 .nav-user{display:flex;align-items:center;gap:.7rem}
 .nav-avatar{
