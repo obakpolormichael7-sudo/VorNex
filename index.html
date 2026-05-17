@@ -1,543 +1,639 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>VORNEX — Enter The Arena</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>VORNEX — Enter The Arena</title>
 
-<!-- Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500&display=swap"
+    rel="stylesheet" />
 
-<!-- Stylesheet -->
-<link rel="stylesheet" href="style.css"/>
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body class="loading">
 
-<!-- ═══ CURSOR ═══════════════════════════════════ -->
-<div id="cur"></div>
-<div id="ring"></div>
+  <!-- ═══ CURSOR ═══════════════════════════════════ -->
+  <div id="cur"></div>
+  <div id="ring"></div>
 
-<!-- ═══ LOADER ══════════════════════════════════ -->
-<div id="loader">
-  <div class="ld-logo">
-    <span class="ld-l">V</span>
-    <span class="ld-l">O</span>
-    <span class="ld-l">R</span>
-    <span class="ld-l ac">N</span>
-    <span class="ld-l">E</span>
-    <span class="ld-l">X</span>
-  </div>
-  <p class="ld-tag">Enter the Arena</p>
-  <div class="ld-bar-w">
-    <span class="ld-cnt" id="ldCnt">0%</span>
-    <div class="ld-bar-bg">
-      <div class="ld-bar-f" id="ldBar"></div>
+  <!-- ═══ LOADER ══════════════════════════════════ -->
+  <div id="loader">
+    <div class="ld-logo">
+      <span class="ld-l">V</span>
+      <span class="ld-l">O</span>
+      <span class="ld-l">R</span>
+      <span class="ld-l ac">N</span>
+      <span class="ld-l">E</span>
+      <span class="ld-l">X</span>
     </div>
-  </div>
-</div>
-
-<!-- Curtain panels for dramatic reveal -->
-<div class="curtain" id="curtain">
-  <div class="ct"></div>
-  <div class="cb"></div>
-</div>
-
-<!-- ═══ NAV ══════════════════════════════════════ -->
-<nav id="nav">
-  <a href="#" class="nav-logo">VOR<b>N</b>EX</a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#subscribe">Subscribe</a></li>
-    <li><a href="#arena">Challenge</a></li>
-    <li><a href="#vault">Games</a></li>
-    <li><a href="#lb">Rankings</a></li>
-    <li><a href="#how">How It Works</a></li>
-  </ul>
-  <div class="nav-r">
-    <button class="mbtn muted" id="musicBtn" aria-label="Toggle ambient sound">
-      <div class="mbars">
-        <span></span><span></span><span></span><span></span>
+    <p class="ld-tag">Enter the Arena</p>
+    <div class="ld-bar-w">
+      <span class="ld-cnt" id="ldCnt">0%</span>
+      <div class="ld-bar-bg">
+        <div class="ld-bar-f" id="ldBar"></div>
       </div>
-    </button>
-    <button class="nav-btn" id="authBtn" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})">
-      Join Now
-    </button>
-    <!-- User avatar shown when logged in -->
-    <div class="nav-user" id="navUser" style="display:none">
-      <img class="nav-avatar" id="navAvatar" src="" alt=""/>
-      <button class="nav-signout" id="signOutBtn">Sign Out</button>
     </div>
-    <button class="hbg" id="menuBtn" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
   </div>
-</nav>
 
-<!-- ═══ HERO ══════════════════════════════════════ -->
-<section id="hero">
-  <canvas id="particle-canvas"></canvas>
-  <div class="hero-overlay"></div>
+  <!-- Curtain panels for dramatic reveal -->
+  <div class="curtain" id="curtain">
+    <div class="ct"></div>
+    <div class="cb"></div>
+  </div>
 
-  <!-- Floating tilted game cards -->
-  <div class="hero-cards">
-    <div class="hc">
-      <div class="hci" style="background-image:url('https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=400&q=70')">
-        <span class="hc-badge">Featured</span>
-        <div class="hc-info">
-          <p class="hc-tag c1-tag">RPG</p>
-          <p class="hc-name">SHADOW-<br>RIFT</p>
-          <p class="hc-sub">2–4 Players</p>
+  <!-- ═══ NAV ══════════════════════════════════════ -->
+  <nav id="nav">
+    <a href="#" class="nav-logo">VOR<b>N</b>EX</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#subscribe">Subscribe</a></li>
+      <li><a href="#arena">Challenge</a></li>
+      <li><a href="#vault">Games</a></li>
+      <li><a href="#lb">Rankings</a></li>
+      <li><a href="#how">How It Works</a></li>
+    </ul>
+    <div class="nav-r">
+      <button class="mbtn muted" id="musicBtn" aria-label="Toggle ambient sound">
+        <div class="mbars">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </button>
+      <button class="nav-btn" id="authBtn"
+        onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})">
+        Join Now
+      </button>
+      <!-- User avatar shown when logged in -->
+      <div class="nav-user" id="navUser" style="display:none">
+        <img class="nav-avatar" id="navAvatar" src="" alt="" />
+        <button class="nav-signout" id="signOutBtn">Sign Out</button>
+      </div>
+      <button class="hbg" id="menuBtn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══ HERO ══════════════════════════════════════ -->
+  <section id="hero">
+    <canvas id="particle-canvas"></canvas>
+    <div class="hero-overlay"></div>
+
+    <!-- Floating tilted game cards -->
+    <div class="hero-cards">
+      <div class="hc">
+        <div class="hci"
+          style="background-image:url('https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=400&q=70')">
+          <span class="hc-badge">Featured</span>
+          <div class="hc-info">
+            <p class="hc-tag c1-tag">RPG</p>
+            <p class="hc-name">SHADOW-<br>RIFT</p>
+            <p class="hc-sub">2–4 Players</p>
+          </div>
+        </div>
+      </div>
+      <div class="hc">
+        <div class="hci"
+          style="background-image:url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=70')">
+          <span class="hc-badge">PvP</span>
+          <div class="hc-info">
+            <p class="hc-tag c2-tag">Action</p>
+            <p class="hc-name">IRON<br>CITADEL</p>
+            <p class="hc-sub">Ranked</p>
+          </div>
+        </div>
+      </div>
+      <div class="hc">
+        <div class="hci"
+          style="background-image:url('https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=400&q=70')">
+          <span class="hc-badge">New</span>
+          <div class="hc-info">
+            <p class="hc-tag c3-tag">Strategy</p>
+            <p class="hc-name">TIDE-<br>WARDEN</p>
+            <p class="hc-sub">Multiplayer</p>
+          </div>
         </div>
       </div>
     </div>
-    <div class="hc">
-      <div class="hci" style="background-image:url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=70')">
-        <span class="hc-badge">PvP</span>
-        <div class="hc-info">
-          <p class="hc-tag c2-tag">Action</p>
-          <p class="hc-name">IRON<br>CITADEL</p>
-          <p class="hc-sub">Ranked</p>
+
+    <div class="hero-content">
+      <p class="hero-ey">Welcome to Vornex · The New Era of Gaming</p>
+      <h1 class="hero-title">
+        <span class="line"><span class="word">ENTER</span></span>
+        <span class="line"><span class="word">THE</span></span>
+        <span class="line"><span class="word glt">ARENA.</span></span>
+        <span class="line"><span class="word ghs">CLAIM</span></span>
+        <span class="line"><span class="word">YOUR REIGN.</span></span>
+      </h1>
+      <div class="hero-bottom">
+        <p class="hero-desc">One platform. Unlimited games. Real skill. Subscribe for full access or rise through the
+          ranks — your call.</p>
+        <div class="hero-actions">
+          <a href="#waitlist" class="btn-p">Start Playing</a>
+          <a href="#how" class="btn-g">How It Works</a>
         </div>
       </div>
     </div>
-    <div class="hc">
-      <div class="hci" style="background-image:url('https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=400&q=70')">
-        <span class="hc-badge">New</span>
-        <div class="hc-info">
-          <p class="hc-tag c3-tag">Strategy</p>
-          <p class="hc-name">TIDE-<br>WARDEN</p>
-          <p class="hc-sub">Multiplayer</p>
+
+    <div class="scroll-hint" id="scrollHint">
+      <p>Scroll</p>
+      <div class="sline"></div>
+    </div>
+  </section>
+
+  <!-- ═══ MARQUEE ══════════════════════════════════ -->
+  <div class="mq">
+    <div class="mq-t">
+      <span class="mq-i">100+ GAMES</span>
+      <span class="mq-i">BATTLE PASS</span>
+      <span class="mq-i">GLOBAL LEADERBOARDS</span>
+      <span class="mq-i">EXCLUSIVE SKINS</span>
+      <span class="mq-i">CHALLENGE ARENA</span>
+      <span class="mq-i">COMMUNITY QUESTS</span>
+      <span class="mq-i">PAYSTACK PAYMENTS</span>
+      <span class="mq-i">NO ADS</span>
+      <!-- Duplicate for seamless loop -->
+      <span class="mq-i">100+ GAMES</span>
+      <span class="mq-i">BATTLE PASS</span>
+      <span class="mq-i">GLOBAL LEADERBOARDS</span>
+      <span class="mq-i">EXCLUSIVE SKINS</span>
+      <span class="mq-i">CHALLENGE ARENA</span>
+      <span class="mq-i">COMMUNITY QUESTS</span>
+      <span class="mq-i">PAYSTACK PAYMENTS</span>
+      <span class="mq-i">NO ADS</span>
+    </div>
+  </div>
+
+  <!-- ═══ INTRO ═════════════════════════════════════ -->
+  <section id="intro">
+    <div class="intro-img-bg"></div>
+    <div class="intro-wm">VORNEX</div>
+    <div class="intro-inner">
+      <p class="ey dk gu">The Platform</p>
+      <h2 class="intro-hl gu">Where your <em>skill</em> becomes your <em>legacy.</em></h2>
+      <div class="intro-cols">
+        <div>
+          <p class="intro-body gl">VORNEX is a gaming subscription platform built for serious players. Subscribe once,
+            access everything — then compete, rank up, and earn prestige that actually means something in this
+            community.</p>
+          <div class="intro-pills gl">
+            <span class="pill">🎮 100+ Games</span>
+            <span class="pill">🏆 Ranked Seasons</span>
+            <span class="pill">⚡ Battle Pass</span>
+            <span class="pill">🔒 Secure Platform</span>
+            <span class="pill">🌍 Nigerian-First</span>
+          </div>
+        </div>
+        <div class="stats-grid gr">
+          <div class="sc">
+            <div class="sn">100+</div>
+            <div class="sl">Games in Vault</div>
+          </div>
+          <div class="sc">
+            <div class="sn">24/7</div>
+            <div class="sl">Always Online</div>
+          </div>
+          <div class="sc">
+            <div class="sn">S1</div>
+            <div class="sl">Season One Live</div>
+          </div>
+          <div class="sc">
+            <div class="sn">₦0</div>
+            <div class="sl">To Start Free</div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="hero-content">
-    <p class="hero-ey">Welcome to Vornex · The New Era of Gaming</p>
-    <h1 class="hero-title">
-      <span class="line"><span class="word">ENTER</span></span>
-      <span class="line"><span class="word">THE</span></span>
-      <span class="line"><span class="word glt">ARENA.</span></span>
-      <span class="line"><span class="word ghs">CLAIM</span></span>
-      <span class="line"><span class="word">YOUR REIGN.</span></span>
-    </h1>
-    <div class="hero-bottom">
-      <p class="hero-desc">One platform. Unlimited games. Real skill. Subscribe for full access or rise through the ranks — your call.</p>
-      <div class="hero-actions">
-        <a href="#waitlist" class="btn-p">Start Playing</a>
-        <a href="#how" class="btn-g">How It Works</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="scroll-hint" id="scrollHint">
-    <p>Scroll</p>
-    <div class="sline"></div>
-  </div>
-</section>
-
-<!-- ═══ MARQUEE ══════════════════════════════════ -->
-<div class="mq">
-  <div class="mq-t">
-    <span class="mq-i">100+ GAMES</span>
-    <span class="mq-i">BATTLE PASS</span>
-    <span class="mq-i">GLOBAL LEADERBOARDS</span>
-    <span class="mq-i">EXCLUSIVE SKINS</span>
-    <span class="mq-i">CHALLENGE ARENA</span>
-    <span class="mq-i">COMMUNITY QUESTS</span>
-    <span class="mq-i">PAYSTACK PAYMENTS</span>
-    <span class="mq-i">NO ADS</span>
-    <!-- Duplicate for seamless loop -->
-    <span class="mq-i">100+ GAMES</span>
-    <span class="mq-i">BATTLE PASS</span>
-    <span class="mq-i">GLOBAL LEADERBOARDS</span>
-    <span class="mq-i">EXCLUSIVE SKINS</span>
-    <span class="mq-i">CHALLENGE ARENA</span>
-    <span class="mq-i">COMMUNITY QUESTS</span>
-    <span class="mq-i">PAYSTACK PAYMENTS</span>
-    <span class="mq-i">NO ADS</span>
-  </div>
-</div>
-
-<!-- ═══ INTRO ═════════════════════════════════════ -->
-<section id="intro">
-  <div class="intro-img-bg"></div>
-  <div class="intro-wm">VORNEX</div>
-  <div class="intro-inner">
-    <p class="ey dk gu">The Platform</p>
-    <h2 class="intro-hl gu">Where your <em>skill</em> becomes your <em>legacy.</em></h2>
-    <div class="intro-cols">
+  <!-- ═══ SUBSCRIBE ═════════════════════════════════ -->
+  <section id="subscribe">
+    <p class="ey gu">Play Everything</p>
+    <h2 class="st gu">PLAY<br><span class="dim">WITHOUT</span><br>LIMITS.</h2>
+    <div class="sub-grid">
       <div>
-        <p class="intro-body gl">VORNEX is a gaming subscription platform built for serious players. Subscribe once, access everything — then compete, rank up, and earn prestige that actually means something in this community.</p>
-        <div class="intro-pills gl">
-          <span class="pill">🎮 100+ Games</span>
-          <span class="pill">🏆 Ranked Seasons</span>
-          <span class="pill">⚡ Battle Pass</span>
-          <span class="pill">🔒 Secure Platform</span>
-          <span class="pill">🌍 Nigerian-First</span>
+        <p class="sub-d gu">One subscription unlocks the entire VORNEX vault. No ads, no per-game charges, no paywalls
+          mid-session. Just you and the games.</p>
+        <div class="feats">
+          <div class="feat gl">
+            <span class="fi">🎮</span>
+            <div>
+              <h4>Full Game Vault</h4>
+              <p>Every genre — action, RPG, strategy, sports, puzzle. New titles added every week.</p>
+            </div>
+          </div>
+          <div class="feat gl">
+            <span class="fi">🏅</span>
+            <div>
+              <h4>Battle Pass & XP</h4>
+              <p>Play games, earn XP, unlock exclusive skins and Legendary badges each season.</p>
+            </div>
+          </div>
+          <div class="feat gl">
+            <span class="fi">📱</span>
+            <div>
+              <h4>Any Device, Any Time</h4>
+              <p>Browser or mobile — your progress syncs everywhere. No downloads needed.</p>
+            </div>
+          </div>
+          <div class="feat gl">
+            <span class="fi">⚔</span>
+            <div>
+              <h4>Challenge Arena Access</h4>
+              <p>Subscribers unlock the competitive arena — challenge opponents, prove your skill.</p>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="stats-grid gr">
-        <div class="sc"><div class="sn">100+</div><div class="sl">Games in Vault</div></div>
-        <div class="sc"><div class="sn">24/7</div><div class="sl">Always Online</div></div>
-        <div class="sc"><div class="sn">S1</div><div class="sl">Season One Live</div></div>
-        <div class="sc"><div class="sn">₦0</div><div class="sl">To Start Free</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ SUBSCRIBE ═════════════════════════════════ -->
-<section id="subscribe">
-  <p class="ey gu">Play Everything</p>
-  <h2 class="st gu">PLAY<br><span class="dim">WITHOUT</span><br>LIMITS.</h2>
-  <div class="sub-grid">
-    <div>
-      <p class="sub-d gu">One subscription unlocks the entire VORNEX vault. No ads, no per-game charges, no paywalls mid-session. Just you and the games.</p>
-      <div class="feats">
-        <div class="feat gl">
-          <span class="fi">🎮</span>
-          <div><h4>Full Game Vault</h4><p>Every genre — action, RPG, strategy, sports, puzzle. New titles added every week.</p></div>
+      <div class="pricing gr">
+        <div class="pc dim">
+          <div class="pc-top"><span class="tn">Explorer</span></div>
+          <div class="tp"><sup>₦</sup>0<sub>/mo</sub></div>
+          <div class="perks">
+            <div class="perk">Game of the Week (24hr)</div>
+            <div class="perk">Ads enabled</div>
+            <div class="perk">Basic leaderboard view</div>
+          </div>
         </div>
-        <div class="feat gl">
-          <span class="fi">🏅</span>
-          <div><h4>Battle Pass & XP</h4><p>Play games, earn XP, unlock exclusive skins and Legendary badges each season.</p></div>
+        <div class="pc hot">
+          <div class="pc-top"><span class="tn">Gamer</span><span class="tb">Most Popular</span></div>
+          <div class="tp"><sup>₦</sup>1,499<sub>/mo</sub></div>
+          <div class="perks">
+            <div class="perk">Full vault — all 100+ games</div>
+            <div class="perk">Battle Pass + XP progression</div>
+            <div class="perk">Challenge Arena unlocked</div>
+            <div class="perk">Ad-free experience</div>
+            <div class="perk">Exclusive "Founder" skin</div>
+          </div>
         </div>
-        <div class="feat gl">
-          <span class="fi">📱</span>
-          <div><h4>Any Device, Any Time</h4><p>Browser or mobile — your progress syncs everywhere. No downloads needed.</p></div>
-        </div>
-        <div class="feat gl">
-          <span class="fi">⚔</span>
-          <div><h4>Challenge Arena Access</h4><p>Subscribers unlock the competitive arena — challenge opponents, prove your skill.</p></div>
-        </div>
-      </div>
-    </div>
-    <div class="pricing gr">
-      <div class="pc dim">
-        <div class="pc-top"><span class="tn">Explorer</span></div>
-        <div class="tp"><sup>₦</sup>0<sub>/mo</sub></div>
-        <div class="perks">
-          <div class="perk">Game of the Week (24hr)</div>
-          <div class="perk">Ads enabled</div>
-          <div class="perk">Basic leaderboard view</div>
-        </div>
-      </div>
-      <div class="pc hot">
-        <div class="pc-top"><span class="tn">Gamer</span><span class="tb">Most Popular</span></div>
-        <div class="tp"><sup>₦</sup>4,999<sub>/mo</sub></div>
-        <div class="perks">
-          <div class="perk">Full vault — all 100+ games</div>
-          <div class="perk">Battle Pass + XP progression</div>
-          <div class="perk">Challenge Arena unlocked</div>
-          <div class="perk">Ad-free experience</div>
-          <div class="perk">Exclusive "Founder" skin</div>
-        </div>
-      </div>
-      <div class="pc">
-        <div class="pc-top"><span class="tn">Elite</span></div>
-        <div class="tp"><sup>₦</sup>9,999<sub>/mo</sub></div>
-        <div class="perks">
-          <div class="perk">Everything in Gamer</div>
-          <div class="perk">Priority tournament entry</div>
-          <div class="perk">VIP Legendary tag</div>
-          <div class="perk">Custom skin + title</div>
-          <div class="perk">Early access to new releases</div>
+        <div class="pc">
+          <div class="pc-top"><span class="tn">Elite</span></div>
+          <div class="tp"><sup>₦</sup>2,999<sub>/mo</sub></div>
+          <div class="perks">
+            <div class="perk">Everything in Gamer</div>
+            <div class="perk">Priority tournament entry</div>
+            <div class="perk">VIP Legendary tag</div>
+            <div class="perk">Custom skin + title</div>
+            <div class="perk">Early access to new releases</div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ═══ ARENA (Video-Ready) ══════════════════════ -->
-<section id="arena">
-  <div class="arena-vid-wrap">
-    <!--
-      ★ SWAP YOUR VIDEO:
-        1. Rename your video file to:  bg-video.mp4
-        2. Drop it in the same folder as index.html
-        3. That's it — done.
-    -->
-    <video autoplay muted loop playsinline>
-      <source src="bg-video.mp4" type="video/mp4">
-    </video>
-    <!-- Fallback image shown if video fails or is missing -->
-    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1600&q=50" alt="Gaming arena background" loading="lazy"/>
-  </div>
-  <div class="arena-overlay"></div>
 
-  <div class="arena-inner">
-    <div class="arena-wm">BET</div>
-    <p class="ey dk gu">Stake Your Skill</p>
-    <div class="arena-grid">
+  <section id="arena">
+    <div class="arena-vid-wrap">
+
+      <video autoplay muted loop playsinline>
+        <source src="bg-video.mp4" type="video/mp4">
+      </video>
+
+      <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1600&q=50"
+        alt="Gaming arena background" loading="lazy" />
+    </div>
+    <div class="arena-overlay"></div>
+
+    <div class="arena-inner">
+      <div class="arena-wm">BET</div>
+      <p class="ey dk gu">Stake Your Skill</p>
+      <div class="arena-grid">
+        <div>
+          <h2 class="arena-title gu">DARE.<br><span>BET.</span><br>DOMINATE.</h2>
+          <p class="arena-desc gu">Challenge any player, set the stakes, and let your skill decide the outcome. The
+            winner takes the pot. No luck — just pure game.</p>
+          <div class="steps">
+            <div class="step gl">
+              <span class="snum">01</span>
+              <div>
+                <h4>Pick Your Opponent</h4>
+                <p>Browse the arena or send a direct challenge to any active subscriber.</p>
+              </div>
+            </div>
+            <div class="step gl">
+              <span class="snum">02</span>
+              <div>
+                <h4>Set the Stakes</h4>
+                <p>Both players agree on a bet amount. Funds locked in escrow until match ends.</p>
+              </div>
+            </div>
+            <div class="step gl">
+              <span class="snum">03</span>
+              <div>
+                <h4>Play & Collect</h4>
+                <p>Winner's payout hits their VORNEX wallet instantly. Small platform cut taken.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Battle UI Card -->
+        <div class="bcard gr">
+          <div class="bch">
+            <span class="bct">⚡ Challenge Match</span>
+            <span class="live"><span class="ldot"></span>Live Now</span>
+          </div>
+          <div class="bcp">
+            <div class="bp">
+              <div class="bav p1"><span>🗡</span></div>
+              <div class="bpn">VORZEK</div>
+              <div class="bpr">Rank #42 · Elite</div>
+            </div>
+            <div class="vsc">
+              <span class="vs">VS</span>
+              <span class="pot">💰 ₦10,000 Pot</span>
+            </div>
+            <div class="bp">
+              <div class="bav p2"><span>🔥</span></div>
+              <div class="bpn">XANTH</div>
+              <div class="bpr">Rank #89 · Gamer</div>
+            </div>
+          </div>
+          <div class="bcg">
+            <p class="bcgl">Current Game</p>
+            <p class="bcgn">IRON CITADEL</p>
+            <div class="prow">
+              <span class="pv gl">64%</span>
+              <div class="pb">
+                <div class="pbf pbf1"></div>
+              </div>
+              <div class="pb">
+                <div class="pbf pbf2"></div>
+              </div>
+              <span class="pv pk">36%</span>
+            </div>
+          </div>
+          <div class="bcf">
+            <div class="ba m">Challenge a Player</div>
+            <div class="ba gh">Watch Live</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section id="vault">
+    <div class="vault-head">
       <div>
-        <h2 class="arena-title gu">DARE.<br><span>BET.</span><br>DOMINATE.</h2>
-        <p class="arena-desc gu">Challenge any player, set the stakes, and let your skill decide the outcome. The winner takes the pot. No luck — just pure game.</p>
-        <div class="steps">
-          <div class="step gl">
-            <span class="snum">01</span>
-            <div><h4>Pick Your Opponent</h4><p>Browse the arena or send a direct challenge to any active subscriber.</p></div>
+        <p class="ey gu">The Vault</p>
+        <h2 class="st gu">100+<br><span class="dim">GAMES.</span></h2>
+      </div>
+      <a href="#" class="vlink gu">Browse All →</a>
+    </div>
+    <div class="games-grid">
+      <div class="gc g1 gs">
+        <div class="gci">
+          <span class="gbadge">RPG</span>
+          <div class="gi">
+            <p class="gtag">Action RPG</p>
+            <p class="gname">SHADOW-<br>RIFT</p>
+            <p class="gmeta">2–4 Players · Ranked</p>
           </div>
-          <div class="step gl">
-            <span class="snum">02</span>
-            <div><h4>Set the Stakes</h4><p>Both players agree on a bet amount. Funds locked in escrow until match ends.</p></div>
-          </div>
-          <div class="step gl">
-            <span class="snum">03</span>
-            <div><h4>Play & Collect</h4><p>Winner's payout hits their VORNEX wallet instantly. Small platform cut taken.</p></div>
+        </div>
+      </div>
+      <div class="gc g2 gs">
+        <div class="gci">
+          <span class="gbadge">PvP</span>
+          <div class="gi">
+            <p class="gtag">Action</p>
+            <p class="gname">IRON<br>CITADEL</p>
+            <p class="gmeta">Competitive · 8v8</p>
           </div>
         </div>
       </div>
-
-      <!-- Live Battle UI Card -->
-      <div class="bcard gr">
-        <div class="bch">
-          <span class="bct">⚡ Challenge Match</span>
-          <span class="live"><span class="ldot"></span>Live Now</span>
-        </div>
-        <div class="bcp">
-          <div class="bp">
-            <div class="bav p1"><span>🗡</span></div>
-            <div class="bpn">VORZEK</div>
-            <div class="bpr">Rank #42 · Elite</div>
-          </div>
-          <div class="vsc">
-            <span class="vs">VS</span>
-            <span class="pot">💰 ₦10,000 Pot</span>
-          </div>
-          <div class="bp">
-            <div class="bav p2"><span>🔥</span></div>
-            <div class="bpn">XANTH</div>
-            <div class="bpr">Rank #89 · Gamer</div>
+      <div class="gc g3 gs">
+        <div class="gci">
+          <span class="gbadge">New</span>
+          <div class="gi">
+            <p class="gtag">Strategy</p>
+            <p class="gname">TIDE-<br>WARDEN</p>
+            <p class="gmeta">Multiplayer</p>
           </div>
         </div>
-        <div class="bcg">
-          <p class="bcgl">Current Game</p>
-          <p class="bcgn">IRON CITADEL</p>
-          <div class="prow">
-            <span class="pv gl">64%</span>
-            <div class="pb"><div class="pbf pbf1"></div></div>
-            <div class="pb"><div class="pbf pbf2"></div></div>
-            <span class="pv pk">36%</span>
+      </div>
+      <div class="gc g4 gs">
+        <div class="gci">
+          <span class="gbadge">Fast</span>
+          <div class="gi">
+            <p class="gtag">Racing</p>
+            <p class="gname">VOLT<br>CIRCUIT</p>
+            <p class="gmeta">8 Players · Arcade</p>
           </div>
         </div>
-        <div class="bcf">
-          <div class="ba m">Challenge a Player</div>
-          <div class="ba gh">Watch Live</div>
+      </div>
+      <div class="gc g5 gs">
+        <div class="gci">
+          <span class="gbadge">Sci-Fi</span>
+          <div class="gi">
+            <p class="gtag">Adventure</p>
+            <p class="gname">VOID-<br>RUNNER</p>
+            <p class="gmeta">Solo · Co-op</p>
+          </div>
+        </div>
+      </div>
+      <div class="gc g6 gs">
+        <div class="gci">
+          <span class="gbadge">Open World</span>
+          <div class="gi">
+            <p class="gtag">Adventure</p>
+            <p class="gname">EMBER-<br>KEEP</p>
+            <p class="gmeta">Open World · Story</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ═══ GAMES VAULT ════════════════════════════════ -->
-<section id="vault">
-  <div class="vault-head">
-    <div>
-      <p class="ey gu">The Vault</p>
-      <h2 class="st gu">100+<br><span class="dim">GAMES.</span></h2>
-    </div>
-    <a href="#" class="vlink gu">Browse All →</a>
-  </div>
-  <div class="games-grid">
-    <div class="gc g1 gs">
-      <div class="gci">
-        <span class="gbadge">RPG</span>
-        <div class="gi"><p class="gtag">Action RPG</p><p class="gname">SHADOW-<br>RIFT</p><p class="gmeta">2–4 Players · Ranked</p></div>
-      </div>
-    </div>
-    <div class="gc g2 gs">
-      <div class="gci">
-        <span class="gbadge">PvP</span>
-        <div class="gi"><p class="gtag">Action</p><p class="gname">IRON<br>CITADEL</p><p class="gmeta">Competitive · 8v8</p></div>
-      </div>
-    </div>
-    <div class="gc g3 gs">
-      <div class="gci">
-        <span class="gbadge">New</span>
-        <div class="gi"><p class="gtag">Strategy</p><p class="gname">TIDE-<br>WARDEN</p><p class="gmeta">Multiplayer</p></div>
-      </div>
-    </div>
-    <div class="gc g4 gs">
-      <div class="gci">
-        <span class="gbadge">Fast</span>
-        <div class="gi"><p class="gtag">Racing</p><p class="gname">VOLT<br>CIRCUIT</p><p class="gmeta">8 Players · Arcade</p></div>
-      </div>
-    </div>
-    <div class="gc g5 gs">
-      <div class="gci">
-        <span class="gbadge">Sci-Fi</span>
-        <div class="gi"><p class="gtag">Adventure</p><p class="gname">VOID-<br>RUNNER</p><p class="gmeta">Solo · Co-op</p></div>
-      </div>
-    </div>
-    <div class="gc g6 gs">
-      <div class="gci">
-        <span class="gbadge">Open World</span>
-        <div class="gi"><p class="gtag">Adventure</p><p class="gname">EMBER-<br>KEEP</p><p class="gmeta">Open World · Story</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ HOW IT WORKS ══════════════════════════════ -->
-<section id="how">
-  <div class="how-img-bg"></div>
-  <div class="how-inner">
-    <div class="how-head">
-      <p class="ey dk gu">Simple Process</p>
-      <h2 class="st dk gu" style="font-size:clamp(2.8rem,7.5vw,7.5rem)">HOW IT<br>WORKS.</h2>
-      <p class="how-sub gu">Getting started takes less than 3 minutes. No crypto wallet, no complicated setup — sign up and play.</p>
-    </div>
-    <div class="how-cards">
-      <div class="hwc gu">
-        <div class="hwc-n">01</div><span class="hwc-i">👤</span>
-        <h3>Create Your Account</h3>
-        <p>Sign up with Google or email. Set your player name, pick your tier, and you're in.</p>
-      </div>
-      <div class="hwc gu">
-        <div class="hwc-n">02</div><span class="hwc-i">🎮</span>
-        <h3>Access the Vault</h3>
-        <p>Browse 100+ games instantly. Stream on browser or mobile — no downloads.</p>
-      </div>
-      <div class="hwc gu">
-        <div class="hwc-n">03</div><span class="hwc-i">💳</span>
-        <h3>Pay with Paystack</h3>
-        <p>Subscribe using your bank card, USSD, or direct transfer. Local payments, zero stress.</p>
-      </div>
-      <div class="hwc gu">
-        <div class="hwc-n">04</div><span class="hwc-i">🏆</span>
-        <h3>Play, Rank & Win</h3>
-        <p>Earn XP, climb the leaderboard, unlock exclusive items, challenge opponents.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ LEADERBOARD ════════════════════════════════ -->
-<section id="lb">
-  <div class="lb-head">
-    <p class="ey gu" style="justify-content:center">Season 1 Rankings</p>
-    <h2 class="st gu" style="text-align:center;font-size:clamp(2.8rem,7vw,7rem)">TOP<br>PLAYERS.</h2>
-  </div>
-  <div class="lb-table">
-    <div class="lbr top gu">
-      <span class="lbrank">1</span>
-      <div class="lbav la1"></div>
-      <div class="lb-inf"><div class="lbn">VORZEK</div><div class="lbt">ShadowRift · 312 matches</div></div>
-      <span class="lbxp">48,200</span>
-      <span class="lbbg blegend">Legendary</span>
-    </div>
-    <div class="lbr gu">
-      <span class="lbrank">2</span>
-      <div class="lbav la2"></div>
-      <div class="lb-inf"><div class="lbn">PYROK</div><div class="lbt">Iron Citadel · 280 matches</div></div>
-      <span class="lbxp">41,500</span>
-      <span class="lbbg belite">Elite Pro</span>
-    </div>
-    <div class="lbr gu">
-      <span class="lbrank">3</span>
-      <div class="lbav la3"></div>
-      <div class="lb-inf"><div class="lbn">TIDECLAW</div><div class="lbt">TideWarden · 245 matches</div></div>
-      <span class="lbxp">38,900</span>
-      <span class="lbbg belite">Elite Pro</span>
-    </div>
-    <div class="lbr gu">
-      <span class="lbrank">4</span>
-      <div class="lbav la4"></div>
-      <div class="lb-inf"><div class="lbn">VOLTEX</div><div class="lbt">VoltCircuit · 198 matches</div></div>
-      <span class="lbxp">31,200</span>
-      <span class="lbbg branked">Ranked</span>
-    </div>
-    <div class="lbr gu">
-      <span class="lbrank">5</span>
-      <div class="lbav la5"></div>
-      <div class="lb-inf"><div class="lbn">VOIDBORN</div><div class="lbt">VoidRunner · 176 matches</div></div>
-      <span class="lbxp">27,800</span>
-      <span class="lbbg branked">Ranked</span>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ WAITLIST ══════════════════════════════════ -->
-<section id="waitlist">
-  <div class="wl-orb"></div>
-  <h2 class="wl-title gu">READY<br>TO <span class="ghs">ENTER</span><br>THE ARENA?</h2>
-  <p class="wl-sub gu">Join the waitlist. Early members get 2 months of Gamer tier free + an exclusive Founder skin that will never be available again.</p>
-  <div class="wl-form gu">
-    <input type="email" class="wl-in" id="wlIn" placeholder="Your email address"/>
-    <button class="wl-btn" id="wlBtn">Claim My Spot</button>
-  </div>
-  <p class="wl-note gu">No spam. No commitment. Early access only.</p>
-</section>
-
-<!-- ═══ AUTH MODAL ═══════════════════════════════ -->
-<div class="auth-modal" id="authModal">
-  <div class="auth-box">
-    <button class="auth-close" id="authClose">✕</button>
-    <div class="auth-logo">VOR<b>N</b>EX</div>
-    <h2 class="auth-title">Enter the Arena</h2>
-    <p class="auth-sub">Sign in to access the vault, track your XP, and climb the leaderboard.</p>
-    <button class="auth-google-btn" id="googleSignIn">
-      <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 002.38-5.88c0-.57-.05-.66-.15-1.18z"/><path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2.04a4.8 4.8 0 01-7.18-2.54H1.83v2.07A8 8 0 008.98 17z"/><path fill="#FBBC05" d="M4.5 10.48A4.8 4.8 0 014.5 7.5V5.43H1.83a8 8 0 000 7.12l2.67-2.07z"/><path fill="#EA4335" d="M8.98 3.58c1.32 0 2.5.45 3.44 1.35l2.56-2.56A8 8 0 001.83 5.43L4.5 7.5c.67-2 2.5-3.92 4.48-3.92z"/></svg>
-      Continue with Google
-    </button>
-    <p class="auth-note">By signing in you agree to our Terms of Service and Privacy Policy.</p>
-  </div>
-</div>
+  </section>
 
 
-<footer>
-  <div class="ft-top">
-    <div class="ft-brand">
-      <div class="ft-logo">VOR<b>N</b>EX</div>
-      <p>The new era of gaming. Where skill is power and every match is a statement.</p>
+  <section id="how">
+    <div class="how-img-bg"></div>
+    <div class="how-inner">
+      <div class="how-head">
+        <p class="ey dk gu">Simple Process</p>
+        <h2 class="st dk gu" style="font-size:clamp(2.8rem,7.5vw,7.5rem)">HOW IT<br>WORKS.</h2>
+        <p class="how-sub gu">Getting started takes less than 3 minutes. No crypto wallet, no complicated setup — sign
+          up and play.</p>
+      </div>
+      <div class="how-cards">
+        <div class="hwc gu">
+          <div class="hwc-n">01</div><span class="hwc-i">👤</span>
+          <h3>Create Your Account</h3>
+          <p>Sign up with Google or email. Set your player name, pick your tier, and you're in.</p>
+        </div>
+        <div class="hwc gu">
+          <div class="hwc-n">02</div><span class="hwc-i">🎮</span>
+          <h3>Access the Vault</h3>
+          <p>Browse 100+ games instantly. Stream on browser or mobile — no downloads.</p>
+        </div>
+        <div class="hwc gu">
+          <div class="hwc-n">03</div><span class="hwc-i">💳</span>
+          <h3>Pay with Paystack</h3>
+          <p>Subscribe using your bank card, USSD, or direct transfer. Local payments, zero stress.</p>
+        </div>
+        <div class="hwc gu">
+          <div class="hwc-n">04</div><span class="hwc-i">🏆</span>
+          <h3>Play, Rank & Win</h3>
+          <p>Earn XP, climb the leaderboard, unlock exclusive items, challenge opponents.</p>
+        </div>
+      </div>
     </div>
-    <div class="ft-col">
-      <h4>Platform</h4>
-      <ul>
-        <li><a href="#">Game Vault</a></li>
-        <li><a href="#">Challenge Arena</a></li>
-        <li><a href="#">Leaderboards</a></li>
-        <li><a href="#">Battle Pass</a></li>
-      </ul>
-    </div>
-    <div class="ft-col">
-      <h4>Account</h4>
-      <ul>
-        <li><a href="#">Sign Up</a></li>
-        <li><a href="#">Log In</a></li>
-        <li><a href="#">Subscription</a></li>
-        <li><a href="#">My Vault</a></li>
-      </ul>
-    </div>
-    <div class="ft-col">
-      <h4>Legal</h4>
-      <ul>
-        <li><a href="#">Terms of Service</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Challenge Rules</a></li>
-        <li><a href="#">Responsible Gaming</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="ft-bot">
-    <p class="ft-copy">© 2026 VORNEX. All rights reserved. Challenge features subject to regional licensing.</p>
-    <div class="socials">
-      <a href="#" class="soc">𝕏</a>
-      <a href="#" class="soc">in</a>
-      <a href="#" class="soc">ig</a>
-      <a href="#" class="soc">yt</a>
-    </div>
-  </div>
-</footer>
+  </section>
 
-<!-- GSAP — must load before main.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-<!-- Supabase — must load before main.js -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<!-- Main JavaScript — loads last -->
-<script src="main.js"></script>
+  <!-- LEADERBOARD -->
+  <section id="lb">
+    <div class="lb-head">
+      <p class="ey gu" style="justify-content:center">Season 1 Rankings</p>
+      <h2 class="st gu" style="text-align:center;font-size:clamp(2.8rem,7vw,7rem)">TOP<br>PLAYERS.</h2>
+    </div>
+    <div class="lb-table">
+      <div class="lbr top gu">
+        <span class="lbrank">1</span>
+        <div class="lbav la1"></div>
+        <div class="lb-inf">
+          <div class="lbn">VORZEK</div>
+          <div class="lbt">ShadowRift · 312 matches</div>
+        </div>
+        <span class="lbxp">48,200</span>
+        <span class="lbbg blegend">Legendary</span>
+      </div>
+      <div class="lbr gu">
+        <span class="lbrank">2</span>
+        <div class="lbav la2"></div>
+        <div class="lb-inf">
+          <div class="lbn">PYROK</div>
+          <div class="lbt">Iron Citadel · 280 matches</div>
+        </div>
+        <span class="lbxp">41,500</span>
+        <span class="lbbg belite">Elite Pro</span>
+      </div>
+      <div class="lbr gu">
+        <span class="lbrank">3</span>
+        <div class="lbav la3"></div>
+        <div class="lb-inf">
+          <div class="lbn">TIDECLAW</div>
+          <div class="lbt">TideWarden · 245 matches</div>
+        </div>
+        <span class="lbxp">38,900</span>
+        <span class="lbbg belite">Elite Pro</span>
+      </div>
+      <div class="lbr gu">
+        <span class="lbrank">4</span>
+        <div class="lbav la4"></div>
+        <div class="lb-inf">
+          <div class="lbn">VOLTEX</div>
+          <div class="lbt">VoltCircuit · 198 matches</div>
+        </div>
+        <span class="lbxp">31,200</span>
+        <span class="lbbg branked">Ranked</span>
+      </div>
+      <div class="lbr gu">
+        <span class="lbrank">5</span>
+        <div class="lbav la5"></div>
+        <div class="lb-inf">
+          <div class="lbn">VOIDBORN</div>
+          <div class="lbt">VoidRunner · 176 matches</div>
+        </div>
+        <span class="lbxp">27,800</span>
+        <span class="lbbg branked">Ranked</span>
+      </div>
+    </div>
+  </section>
+
+  
+  <section id="waitlist">
+    <div class="wl-orb"></div>
+    <h2 class="wl-title gu">READY<br>TO <span class="ghs">ENTER</span><br>THE ARENA?</h2>
+    <p class="wl-sub gu">Join the waitlist. Early members get 2 months of Gamer tier free + an exclusive Founder skin
+      that will never be available again.</p>
+    <div class="wl-form gu">
+      <input type="email" class="wl-in" id="wlIn" placeholder="Your email address" />
+      <button class="wl-btn" id="wlBtn">Claim My Spot</button>
+    </div>
+    <p class="wl-note gu">No spam. No commitment. Early access only.</p>
+  </section>
+
+  <!--  AUTH MODAL -->
+  <div class="auth-modal" id="authModal">
+    <div class="auth-box">
+      <button class="auth-close" id="authClose">✕</button>
+      <div class="auth-logo">VOR<b>N</b>EX</div>
+      <h2 class="auth-title">Enter the Arena</h2>
+      <p class="auth-sub">Sign in to access the vault, track your XP, and climb the leaderboard.</p>
+      <button class="auth-google-btn" id="googleSignIn">
+        <svg width="18" height="18" viewBox="0 0 18 18">
+          <path fill="#4285F4"
+            d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 002.38-5.88c0-.57-.05-.66-.15-1.18z" />
+          <path fill="#34A853"
+            d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2.04a4.8 4.8 0 01-7.18-2.54H1.83v2.07A8 8 0 008.98 17z" />
+          <path fill="#FBBC05" d="M4.5 10.48A4.8 4.8 0 014.5 7.5V5.43H1.83a8 8 0 000 7.12l2.67-2.07z" />
+          <path fill="#EA4335"
+            d="M8.98 3.58c1.32 0 2.5.45 3.44 1.35l2.56-2.56A8 8 0 001.83 5.43L4.5 7.5c.67-2 2.5-3.92 4.48-3.92z" />
+        </svg>
+        Continue with Google
+      </button>
+      <p class="auth-note">By signing in you agree to our Terms of Service and Privacy Policy.</p>
+    </div>
+  </div>
+
+
+  <footer>
+    <div class="ft-top">
+      <div class="ft-brand">
+        <div class="ft-logo">VOR<b>N</b>EX</div>
+        <p>The new era of gaming. Where skill is power and every match is a statement.</p>
+      </div>
+      <div class="ft-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="#">Game Vault</a></li>
+          <li><a href="#">Challenge Arena</a></li>
+          <li><a href="#">Leaderboards</a></li>
+          <li><a href="#">Battle Pass</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Account</h4>
+        <ul>
+          <li><a href="#">Sign Up</a></li>
+          <li><a href="#">Log In</a></li>
+          <li><a href="#">Subscription</a></li>
+          <li><a href="#">My Vault</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Challenge Rules</a></li>
+          <li><a href="#">Responsible Gaming</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <p class="ft-copy">© 2026 VORNEX. All rights reserved. Challenge features subject to regional licensing.</p>
+      <div class="socials">
+        <a href="#" class="soc">𝕏</a>
+        <a href="#" class="soc">in</a>
+        <a href="#" class="soc">ig</a>
+        <a href="#" class="soc">yt</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP — must load before main.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <!-- Supabase — must load before main.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Main JavaScript — loads last -->
+  <script src="main.js"></script>
 
 </body>
+
 </html>
