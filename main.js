@@ -89,81 +89,101 @@ supabase.auth.onAuthStateChange(async (event, session) => {
 ───────────────────────────────────────────── */
 const PAYSTACK_KEY = 'pk_test_098898e0a8c22ef4cbb083f7e73acfd37fb44b48';
 
+function resetBtn(btn, plan) {
+  btn.disabled         = false;
+  btn.style.background = '';
+  btn.style.color      = '';
+  btn.textContent      = plan === 'gamer'
+    ? 'Subscribe — ₦1,500/mo'
+    : 'Subscribe — ₦2,999/mo';
+}
+
 document.querySelectorAll('.gamer-btn, .elite-btn').forEach(btn => {
   btn.addEventListener('click', async () => {
 
-    // Check if user is logged in first
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) {
+    const plan   = btn.dataset.plan;
+    const amount = parseInt(btn.dataset.amount);
+
+    // Check login first
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+
+    if (sessionError || !session) {
       authModal.classList.add('open');
       return;
     }
 
-    const plan   = btn.dataset.plan;
-    const amount = parseInt(btn.dataset.amount);
-    const user   = session.user;
+    const user = session.user;
 
+    // Set loading state
     btn.disabled    = true;
-    btn.textContent = 'Loading...';
+    btn.textContent = 'Opening...';
 
-    const handler = PaystackPop.setup({
-      key:       PAYSTACK_KEY,
-      email:     user.email,
-      amount:    amount,
-      currency:  'NGN',
-      ref:       'VORNEX_' + Date.now() + '_' + user.id.slice(0, 8),
-      metadata: {
-        user_id:  user.id,
-        plan:     plan,
-        username: user.user_metadata?.full_name || user.email
-      },
-      onClose: () => {
-        btn.disabled    = false;
-        btn.textContent = plan === 'gamer'
-          ? 'Subscribe — ₦1,500/mo'
-          : 'Subscribe — ₦2,999/mo';
-      },
-      callback: async (response) => {
-        // Payment successful — save to Supabase
-        const now     = new Date();
-        const expires = new Date(now.setMonth(now.getMonth() + 1));
+    // Small delay to let browser breathe
+    await new Promise(r => setTimeout(r, 300));
 
-        // Save subscription
-        await supabase.from('subscriptions').insert({
-          user_id:              user.id,
-          tier:                 plan,
-          status:               'active',
-          paystack_customer_id: response.reference,
-          amount:               amount / 100,
-          expires_at:           expires.toISOString()
-        });
+    try {
+      const handler = PaystackPop.setup({
+        key:      PAYSTACK_KEY,
+        email:    user.email,
+        amount:   amount,
+        currency: 'NGN',
+        ref:      'VNX_' + Date.now(),
+        metadata: {
+          user_id: user.id,
+          plan:    plan
+        },
+        onClose: () => {
+          resetBtn(btn, plan);
+        },
+        callback: async (response) => {
+          btn.textContent = 'Saving...';
 
-        // Update user tier
-        await supabase.from('users').update({
-          subscription_tier:       plan,
-          subscription_status:     'active',
-          subscription_expires_at: expires.toISOString()
-        }).eq('id', user.id);
+          const now     = new Date();
+          const expires = new Date();
+          expires.setMonth(expires.getMonth() + 1);
 
-        // Save transaction
-        await supabase.from('transactions').insert({
-          user_id:             user.id,
-          type:                'subscription',
-          amount:              amount / 100,
-          status:              'success',
-          paystack_reference:  response.reference,
-          description:         `VORNEX ${plan} subscription`
-        });
+          // Save subscription
+          await supabase.from('subscriptions').insert({
+            user_id:              user.id,
+            tier:                 plan,
+            status:               'active',
+            paystack_customer_id: response.reference,
+            amount:               amount / 100,
+            expires_at:           expires.toISOString()
+          });
 
-        // Show success
-        btn.disabled         = false;
-        btn.textContent      = '✓ Subscribed!';
-        btn.style.background = 'var(--glow)';
-        btn.style.color      = 'var(--black)';
-      }
-    });
+          // Update user tier
+          await supabase.from('users').update({
+            subscription_tier:       plan,
+            subscription_status:     'active',
+            subscription_expires_at: expires.toISOString()
+          }).eq('id', user.id);
 
-    handler.openIframe();
+          // Save transaction
+          await supabase.from('transactions').insert({
+            user_id:            user.id,
+            type:               'subscription',
+            amount:             amount / 100,
+            status:             'success',
+            paystack_reference: response.reference,
+            description:        `VORNEX ${plan} subscription`
+          });
+
+          // Show success
+          btn.disabled         = false;
+          btn.textContent      = '✓ Subscribed!';
+          btn.style.background = 'var(--glow)';
+          btn.style.color      = 'var(--black)';
+        }
+      });
+
+      handler.openIframe();
+
+    } catch (err) {
+      console.error('Paystack error:', err);
+      resetBtn(btn, plan);
+      alert('Payment could not open. Please try again.');
+    }
   });
 });
 
