@@ -11,6 +11,9 @@ const SUPABASE_URL  = 'https://eeeypgxwnvcighbyeizo.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVlZXlwZ3h3bnZjaWdoYnllaXpvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5MzU5MTgsImV4cCI6MjA5NDUxMTkxOH0.LSxD4gTAjNoes-6dTGtNbncjQpVquG8VY-hx-zE9o5o';
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
+// Global user — set on auth change, read synchronously by Paystack
+let currentUser = null;
+
 /* ─────────────────────────────────────────────
    AUTH — GOOGLE SIGN IN / SIGN OUT
 ───────────────────────────────────────────── */
@@ -59,28 +62,26 @@ signOutBtn.addEventListener('click', async () => {
 // Check session on page load & listen for changes
 supabase.auth.onAuthStateChange(async (event, session) => {
   if (session?.user) {
-    // User is logged in
-    const user = session.user;
+    const user  = session.user;
+    currentUser = user; // store globally
 
-    // Show avatar, hide Join Now
-    navAvatar.src        = user.user_metadata?.avatar_url || '';
+    navAvatar.src          = user.user_metadata?.avatar_url || '';
     navUser.style.display  = 'flex';
     authBtn.style.display  = 'none';
     authModal.classList.remove('open');
 
-    // Upsert user into our users table
     await supabase.from('users').upsert({
-      id:        user.id,
-      email:     user.email,
-      username:  user.user_metadata?.full_name?.replace(/\s+/g, '_').toLowerCase()
-                 || user.email.split('@')[0],
+      id:         user.id,
+      email:      user.email,
+      username:   user.user_metadata?.full_name?.replace(/\s+/g, '_').toLowerCase()
+                  || user.email.split('@')[0],
       avatar_url: user.user_metadata?.avatar_url || null,
     }, { onConflict: 'id' });
 
   } else {
-    // No session
-    navUser.style.display = 'none';
-    authBtn.style.display = 'flex';
+    currentUser            = null;
+    navUser.style.display  = 'none';
+    authBtn.style.display  = 'flex';
   }
 });
 
@@ -104,26 +105,8 @@ document.querySelectorAll('.gamer-btn, .elite-btn').forEach(btn => {
     const plan   = btn.dataset.plan;
     const amount = parseInt(btn.dataset.amount);
 
-    // Get session synchronously from localStorage (Supabase stores it there)
-    const rawSession = localStorage.getItem(
-      'sb-eeeypgxwnvcighbyeizo-auth-token'
-    );
-
-    if (!rawSession) {
-      authModal.classList.add('open');
-      return;
-    }
-
-    let user;
-    try {
-      const parsed = JSON.parse(rawSession);
-      user = parsed?.user;
-    } catch {
-      authModal.classList.add('open');
-      return;
-    }
-
-    if (!user) {
+    // Use global currentUser — no async needed
+    if (!currentUser) {
       authModal.classList.add('open');
       return;
     }
@@ -131,15 +114,15 @@ document.querySelectorAll('.gamer-btn, .elite-btn').forEach(btn => {
     btn.disabled    = true;
     btn.textContent = 'Opening...';
 
-    // Open Paystack immediately — no await before this
+    // Paystack opens immediately — browser sees direct click
     const handler = PaystackPop.setup({
       key:      PAYSTACK_KEY,
-      email:    user.email,
+      email:    currentUser.email,
       amount:   amount,
       currency: 'NGN',
       ref:      'VNX_' + Date.now(),
       metadata: {
-        user_id: user.id,
+        user_id: currentUser.id,
         plan:    plan
       },
       onClose: () => {
@@ -152,7 +135,7 @@ document.querySelectorAll('.gamer-btn, .elite-btn').forEach(btn => {
         expires.setMonth(expires.getMonth() + 1);
 
         await supabase.from('subscriptions').insert({
-          user_id:              user.id,
+          user_id:              currentUser.id,
           tier:                 plan,
           status:               'active',
           paystack_customer_id: response.reference,
@@ -164,10 +147,10 @@ document.querySelectorAll('.gamer-btn, .elite-btn').forEach(btn => {
           subscription_tier:       plan,
           subscription_status:     'active',
           subscription_expires_at: expires.toISOString()
-        }).eq('id', user.id);
+        }).eq('id', currentUser.id);
 
         await supabase.from('transactions').insert({
-          user_id:            user.id,
+          user_id:            currentUser.id,
           type:               'subscription',
           amount:             amount / 100,
           status:             'success',
